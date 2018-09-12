@@ -22,7 +22,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layou_todo_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_todo_item, parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
