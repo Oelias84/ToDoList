@@ -11,23 +11,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    //Vars
-    private ArrayList<String> todos = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        initRecyclerView();
     }
 
-    private void initRecyclerView(){
 
 
     }
 
-
-}
