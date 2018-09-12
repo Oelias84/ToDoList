@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,20 +9,25 @@
 
 
     <TextView
-
+        android:textAlignment="center"
         android:id="@+id/line1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wilkommend"
+        android:text="ToDo"
         android:textSize="22sp"/>
 
+
     <Button
-        android:layout_below="@+id/line1"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text= "click me"
-        android:onClick="btnSecond"/>
+        android:layout_below="@+id/line1"
+        android:onClick="dialog1"
+        android:text="Register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+
+
 
 
 </RelativeLayout>

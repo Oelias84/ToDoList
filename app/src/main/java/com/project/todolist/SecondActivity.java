@@ -22,7 +22,7 @@ public class SecondActivity extends Activity {
         RecyclerView rcv = findViewById(R.id.recycler_view);
         rcv.setLayoutManager(new LinearLayoutManager(this));
         data.add ("Ofir Need to work better");
-        
+
 
         rcv.setAdapter(new RecyclerViewAdapter(data));
 
