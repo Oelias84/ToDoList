@@ -26,7 +26,6 @@ public class SecondActivity extends Activity {
 
         rcv.setAdapter(new RecyclerViewAdapter(data));
 
-
     }
 
 
