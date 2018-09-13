@@ -29,6 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         holder.recycleViewTxt.setText (toDoListText.get (position));
 
 

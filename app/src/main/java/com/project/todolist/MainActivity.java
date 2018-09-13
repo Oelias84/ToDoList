@@ -1,54 +1,38 @@
 package com.project.todolist;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
-
-
-import java.util.ArrayList;
-import java.util.Calendar;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
+    private LoginOrSighupDialog loginOrSighupDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dialog1 (new View (this));
+        loginOrSighupDialog = new LoginOrSighupDialog ();
+
+        loginOrSighupDialog.show (getFragmentManager (),"start");
 
 
     }
 
-
     public void btnSecond(View view)  {
-
-        Intent i = new Intent (this,SecondActivity.class);
-        startActivity(i);
 
     }
 
     public void dialog1(View view) {
-
-        AlertDialog dialog = new AlertDialog.Builder(this).create();
-
-        View dialogView = getLayoutInflater().inflate(R.layout.dailogloginsignup, null, false);
-        dialog.setView(dialogView); //set as dialog's view
-
-
-        dialogView.findViewById(R.id.loginBtn).setOnClickListener(new Dialog2Listener(dialog));
-        dialogView.findViewById(R.id.registerBtn).setOnClickListener(new Dialog2Listener(dialog));
-
-
-        dialog.show();
+        loginOrSighupDialog.show (getFragmentManager (),"start");
 
     }
 
