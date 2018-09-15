@@ -7,5 +7,10 @@
     <string name="login_or_register">Login OR Register</string>
     <string name="e_mail">E-mail</string>
     <string name="move_to_list">Move to list</string>
+    <string name="Title">Title:</string>
+    <string name="Description">Description:</string>
+    <string name="Done">Done:</string>
+    <string name="Cancel">Cancel</string>
+
 
 </resources>

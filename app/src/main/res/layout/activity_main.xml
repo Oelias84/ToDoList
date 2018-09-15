@@ -27,6 +27,8 @@
         android:onClick="dialog1"
         android:text="@string/register" />
 
+        android:text="@string/register" />
+
     <Button
         android:onClick="moveToSecond"
         android:text="@string/move_to_list"

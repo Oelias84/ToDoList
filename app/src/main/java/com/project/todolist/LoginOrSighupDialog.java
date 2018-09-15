@@ -66,7 +66,7 @@ public class LoginOrSighupDialog extends DialogFragment {
         preferences = getActivity ().getPreferences (Context.MODE_PRIVATE);
         editor = preferences.edit ();
 
-        view = getActivity ().getLayoutInflater ().inflate (R.layout.dailogloginsignup,null);
+        view = getActivity ().getLayoutInflater ().inflate (R.layout.dailog_login_signup,null);
 
         rememberMe = view.findViewById (R.id.CB_RememberMe);
         loginEmail = view.findViewById (R.id.editTxtEmail);

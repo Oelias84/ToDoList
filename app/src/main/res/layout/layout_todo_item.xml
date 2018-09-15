@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/todoLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/todoLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp">
 
     <TextView
-        android:paddingLeft="10dp"
-        android:layout_centerVertical="true"
-        android:textSize="30sp"
-        android:text="view"
-        android:id="@+id/todoTxt"
+        android:id="@+id/txt_Title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textSize="30sp" />
 
+    <TextView
+        android:layout_toEndOf="@+id/txt_Title"
+        android:id="@+id/txt_Des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:textSize="30sp" />
 
-
+    <!--<Button
+        android:id="@+id/edit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:text="edit" />-->
 </RelativeLayout>

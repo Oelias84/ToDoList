@@ -8,52 +8,57 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
 
 
-    private ArrayList<String> toDoListText;
+    private ArrayList<String> toDoListArray;
 
 
-    public RecyclerViewAdapter(ArrayList<String> toDoListText) {
-        this.toDoListText = toDoListText;
+    public RecyclerViewAdapter(ArrayList<String> toDoListArray) {
+        this.toDoListArray = toDoListArray;
 
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_todo_item, parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.recycleViewTxt.setText (toDoListText.get (position));
+
+
+
+    @Override
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+
+        // todo list text view
+
 
 
     }
 
     @Override
     public int getItemCount() {
-        return toDoListText.size();
+        return toDoListArray.size();
     }
-
-
-
 
 }
 
-class ViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-    TextView recycleViewTxt;
 
-    public ViewHolder(View itemView) {
+    TextView txtTitle;
+    TextView txtDes;
+
+    public MyViewHolder(View itemView) {
         super (itemView);
-        recycleViewTxt = itemView.findViewById (R.id.todoTxt);
+        txtTitle = itemView.findViewById (R.id.txt_Title);
+        txtDes = itemView.findViewById(R.id.txt_Des);
+    }
 
 
     }
-}
 
