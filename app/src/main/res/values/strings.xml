@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ToDoList</string>
-    <string name="remember_me">Remember Me</string>
+    <string name="remember_me">RememberMe</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="register">Register</string>
+
     <string name="login_or_register">Login OR Register</string>
     <string name="e_mail">E-mail</string>
     <string name="move_to_list">Move to list</string>

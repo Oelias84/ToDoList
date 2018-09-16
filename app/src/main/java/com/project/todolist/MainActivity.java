@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loginOrSighupDialog = new LoginOrSighupDialog ();
+        loginOrSighupDialog.setContext (this);
 
     }
 

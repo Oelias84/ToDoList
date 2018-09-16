@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,35 +28,66 @@ public class LoginOrSighupDialog extends DialogFragment {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     public static final String PREFS = "PrefsFile";
-
+    boolean rMe ;
 
     private View view;
     private EditText loginPass, loginEmail;
-    private Button btnLogin, btnRegister;
+
     private String email, pass;
     private CheckBox rememberMe;
     private FirebaseAuth mAuth ;
     private ProgressBar progressBar;
+    private Context context;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         viewInit ();
-        boolean rMe = preferences.getBoolean ("RememberMe",true);
+
+        rMe = preferences.getBoolean ("RememberMe",true);
         if (rMe){
             loginEmail.setText (preferences.getString ("email",null));
             loginPass.setText (preferences.getString ("pass",null));
-            btnLogin.callOnClick ();
+            login ();
 
         }
+
         AlertDialog.Builder alert = new AlertDialog.Builder (getActivity ());
         alert.setView (view);
+        alert.setPositiveButton ("Login", new DialogInterface.OnClickListener () {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                email = loginEmail.getText ().toString ();
+                pass = loginPass.getText ().toString ();
+                progressBar.setVisibility (View.VISIBLE);
+                getActivity ().getWindow ().addFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                setRememberMe ();
+                if (rMe){
+                    editor.putString ("email",email);
+                    editor.putString ("pass",pass);
+                }
+                login ();
+            }
+        }).setNegativeButton ("Register", new DialogInterface.OnClickListener () {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                email = loginEmail.getText ().toString ();
+                pass = loginPass.getText ().toString ();
+                progressBar.setVisibility (View.VISIBLE);
+                getActivity ().getWindow ().addFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                registerUser ();
+            }
+        });
         return alert.create ();
     }
 
     public void setRememberMe(){
-        boolean rememberMeChecked = preferences.getBoolean ("RememberMe", rememberMe.isChecked ());
-        editor.putBoolean ("RememberMe", rememberMeChecked);
+        rMe = preferences.getBoolean ("RememberMe", rememberMe.isChecked ());
+        editor.putBoolean ("RememberMe", rMe);
         editor.apply ();
     }
 
@@ -65,44 +97,36 @@ public class LoginOrSighupDialog extends DialogFragment {
 
         preferences = getActivity ().getPreferences (Context.MODE_PRIVATE);
         editor = preferences.edit ();
-
         view = getActivity ().getLayoutInflater ().inflate (R.layout.dailog_login_signup,null);
 
         rememberMe = view.findViewById (R.id.CB_RememberMe);
         loginEmail = view.findViewById (R.id.editTxtEmail);
         loginPass = view.findViewById (R.id.editTxtPass);
+
+        /*
         btnLogin = view.findViewById (R.id.loginBtn);
         btnRegister = view.findViewById (R.id.registerBtn);
+        */
+
         mAuth = FirebaseAuth.getInstance ();
         progressBar = view.findViewById (R.id.progressBar);
 
-        btnLogin.setOnClickListener (new View.OnClickListener () {
+
+
+        /*btnLogin.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                email = loginEmail.getText ().toString ();
-                pass = loginPass.getText ().toString ();
-                progressBar.setVisibility (View.VISIBLE);
-                getActivity ().getWindow ().addFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                editor.putString ("email",email);
-                editor.putString ("pass",pass);
-                editor.apply ();
-
-                login ();
             }
         });
 
         btnRegister.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                email = loginEmail.getText ().toString ();
-                pass = loginPass.getText ().toString ();
-                progressBar.setVisibility (View.VISIBLE);
-                getActivity ().getWindow ().addFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                registerUser ();
+
 
             }
-        });
+        });*/
 
     }
 
@@ -113,14 +137,16 @@ public class LoginOrSighupDialog extends DialogFragment {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                progressBar.setVisibility (View.GONE);
 
+                                progressBar.setVisibility (View.GONE);
                                 Log.d(TAG, "signInWithEmail:success");
-                                Toast.makeText(getContext (), "Login Successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show();
                                 getActivity ().getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                editor.apply ();
                                 moveToTodo ();
 
                             } else {
+
                                 progressBar.setVisibility (View.GONE);
                                 getActivity ().getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 // If sign in fails, display a message to the user.
@@ -161,7 +187,6 @@ public class LoginOrSighupDialog extends DialogFragment {
 
                                 moveToTodo ();
                             }else {
-
                                 getActivity ().getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 progressBar.setVisibility (View.GONE);
                                 Toast.makeText (getContext (), "Unsuccessful wrong details", Toast.LENGTH_SHORT).show ();
