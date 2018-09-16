@@ -21,20 +21,19 @@
         android:id="@+id/btnRegister"
         android:layout_below="@+id/line1"
         android:gravity="center"
-        android:onClick="dialog1"
+        android:onClick="login_RegisterAlert"
         android:text="@string/login_or_register"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"/>
 
 
     <Button
+        android:id="@+id/btnOfir"
         android:layout_below="@id/btnRegister"
         android:onClick="moveToSecond"
         android:text="@string/move_to_list"
-        android:id="@+id/btnOfir"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>
