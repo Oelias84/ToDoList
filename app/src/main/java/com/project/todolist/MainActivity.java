@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void moveToSecond() {
-        Intent i = new Intent (this, SecondActivity.class);
-        startActivity (i);
-    }
-
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
         startActivity (i);
