@@ -21,6 +21,7 @@ import java.util.HashMap;
 public class SecondActivity extends AppCompatActivity {
 
 
+    //change here to the new recView
     ArrayList<Item> data = new ArrayList<> ();
     RecyclerViewAdapter adapter = new RecyclerViewAdapter ();
 

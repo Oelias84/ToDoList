@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
@@ -72,4 +72,3 @@ class Item {
         this.desc = desc;
     }
 }
-
