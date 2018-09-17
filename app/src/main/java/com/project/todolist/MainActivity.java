@@ -52,26 +52,27 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance ();
         preferences = getPreferences (Context.MODE_PRIVATE);
         editor = preferences.edit ();
-
-        //getting remember me setting
-        rMe = preferences.getBoolean ("RememberMe", true);
-        if (rMe) {
-            loginEmail.setText (preferences.getString ("email", null));
-            loginPass.setText (preferences.getString ("pass", null));
-        }
+// TODO: 17/09/2018 fix remember btn
+//        //getting remember me setting
+//        rMe = preferences.getBoolean ("RememberMe", true);
+//        if (rMe) {
+//            loginEmail.setText (preferences.getString ("email", null));
+//            loginPass.setText (preferences.getString ("pass", null));
+//        }
 
     }
 
-    public void moveToSecond() {
-        Intent i = new Intent (this, SecondActivity.class);
-        startActivity (i);
-    }
+//    public void moveToSecond() {
+//        Intent i = new Intent (this, SecondActivity.class);
+//        startActivity (i);
+//    }
 
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
         startActivity (i);
     }
 
+    @SuppressLint("InflateParams")
     public void login_RegisterAlert(View view) {
 
         //initialising Alert view
@@ -132,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText (getBaseContext (), "Login Successful", Toast.LENGTH_SHORT).show ();
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 editor.commit ();
-                                moveToSecond ();
+                                // TODO: 17/09/2018 fix bud
+//                                moveToSecond (this,SecondActivity.class);
                             } else {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 // If sign in fails, display a message to the user.
@@ -159,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful ()) {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 Toast.makeText (getBaseContext (), "Create user with Email : Success", Toast.LENGTH_SHORT).show ();
-                                moveToSecond ();
+                                // TODO: 17/09/2018 fix this too
+//                                moveToSecond ();
                                 editor.commit ();
                             } else {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

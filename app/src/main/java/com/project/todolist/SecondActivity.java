@@ -2,8 +2,6 @@ package com.project.todolist;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,19 +10,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class SecondActivity extends AppCompatActivity {
 
 
     //change here to the new recView
-    ArrayList<Item> data = new ArrayList<> ();
-    RecyclerViewAdapter adapter = new RecyclerViewAdapter ();
-
+    List<Item> data = new ArrayList<> ();
+    //RecyclerViewAdapter adapter = new RecyclerViewAdapter ();
+    RecAdapter adapter = new RecAdapter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +44,7 @@ public class SecondActivity extends AppCompatActivity {
 
     public void addBtn(View btn) {
 
-        View v = getLayoutInflater ().inflate (R.layout.fragment_add_btn_dialog, null, false);
+        @SuppressLint("InflateParams") View v = getLayoutInflater ().inflate (R.layout.fragment_add_btn_dialog, null, false);
         final EditText titleEdt = v.findViewById (R.id.title_edit_txt),
                 descriptionEdt = v.findViewById (R.id.description_edit_txt);
 
@@ -56,9 +53,9 @@ public class SecondActivity extends AppCompatActivity {
                 .setPositiveButton ("done", new DialogInterface.OnClickListener () {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String des = descriptionEdt.getText ().toString ();
-                        String title = titleEdt.getText ().toString ();
-                        Item data = new Item (title, des);
+                        String desc = descriptionEdt.getText().toString ();
+                        String ttl = titleEdt.getText ().toString ();
+                        Item data = new Item (ttl, desc);
                         adapter.add (data);
                     }
                 })
