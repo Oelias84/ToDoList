@@ -21,7 +21,7 @@ public class SecondActivity extends AppCompatActivity {
     //change here to the new recView
     List<Item> data = new ArrayList<> ();
     //RecyclerViewAdapter adapter = new RecyclerViewAdapter ();
-    RecAdapter adapter = new RecAdapter();
+    MyRecAdapter adapter = new MyRecAdapter ();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,4 +62,12 @@ public class SecondActivity extends AppCompatActivity {
                 .setNegativeButton ("Cancel", null)
                 .show ();
     }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy ();
+
+    }
+
 }

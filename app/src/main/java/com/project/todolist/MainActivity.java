@@ -26,11 +26,15 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
-    //remember me
+
+    //Remember me
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    public static final String PREFS = "PrefsFile";
-    boolean rMe;
+    private static final String START_PREF = "startPref";
+    private static final String REMEMBER_ME ="RememberMe";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASS = "pass";
+
     private CheckBox rememberMe;
 
     //Certification for login
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
 
+
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,44 +55,49 @@ public class MainActivity extends AppCompatActivity {
         setContentView (R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance ();
-        preferences = getPreferences (Context.MODE_PRIVATE);
-        editor = preferences.edit ();
-// TODO: 17/09/2018 fix remember btn
-//        //getting remember me setting
-//        rMe = preferences.getBoolean ("RememberMe", true);
-//        if (rMe) {
-//            loginEmail.setText (preferences.getString ("email", null));
-//            loginPass.setText (preferences.getString ("pass", null));
-//        }
 
     }
 
-//    public void moveToSecond() {
-//        Intent i = new Intent (this, SecondActivity.class);
-//        startActivity (i);
-//    }
-
+    public void moveToSecond() {
+        Intent i = new Intent (this, SecondActivity.class);
+        startActivity (i);
+    }
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
         startActivity (i);
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint({"InflateParams", "CommitPrefEdits"})
     public void login_RegisterAlert(View view) {
+
 
         //initialising Alert view
         view = getLayoutInflater ().inflate (R.layout.dailog_login_signup, null, false);
+
         rememberMe = view.findViewById (R.id.CB_RememberMe);
         loginEmail = view.findViewById (R.id.editTxtEmail);
         loginPass = view.findViewById (R.id.editTxtPass);
         progressBar = view.findViewById (R.id.progressBar);
+
+        //getting prefs for rMe
+        preferences = this.getSharedPreferences (START_PREF , Context.MODE_PRIVATE);
+        editor = preferences.edit ();
+
+        //getting remember me setting
+        if (preferences.getBoolean (REMEMBER_ME, false))
+            rememberMe.setChecked (true);
+        else
+            rememberMe.setChecked (false);
+
+        loginEmail.setText (preferences.getString (KEY_EMAIL, ""));
+        loginPass.setText (preferences.getString (KEY_PASS, ""));
 
         //Create Login - Register Alert
         AlertDialog alertDialog = new AlertDialog.Builder (this).setView (view)
                 .setPositiveButton ("Login",null)
                 .setNeutralButton ("Register", null).show ();
 
-        //positive btn
+        //positive login btn
         alertDialog.getButton (alertDialog.BUTTON_POSITIVE).setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
@@ -95,15 +105,18 @@ public class MainActivity extends AppCompatActivity {
                 pass = loginPass.getText ().toString ();
                 getWindow ().addFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 setRememberMe ();
-                if (rMe) {
-                    editor.putString ("email", email);
-                    editor.putString ("pass", pass);
+                if (rememberMe.isChecked ()) {
+                    editor.putString (KEY_EMAIL, email.trim ());
+                    editor.putString (KEY_PASS, pass.trim ());
+                } else {
+                    editor.putString (KEY_EMAIL, "");
+                    editor.putString (KEY_PASS, "");
                 }
                 login ();
             }
         });
 
-        //neutral btn
+        //neutral btn register
         alertDialog.getButton (alertDialog.BUTTON_NEUTRAL).setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
@@ -111,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 pass = loginPass.getText ().toString ();
                 getWindow ().addFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 setRememberMe ();
-                if (rMe) {
-                    editor.putString ("email", email);
-                    editor.putString ("pass", pass);
+                if (rememberMe.isChecked ()) {
+                    editor.putString (KEY_EMAIL, email);
+                    editor.putString (KEY_PASS, pass);
                 }
                 registerUser ();
             }
@@ -129,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBar.setVisibility (View.GONE);
                             if (task.isSuccessful ()) {
+                                setRememberMe ();
                                 Log.d (TAG, "signInWithEmail:success");
                                 Toast.makeText (getBaseContext (), "Login Successful", Toast.LENGTH_SHORT).show ();
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                                editor.commit ();
-                                // TODO: 17/09/2018 fix bud
-//                                moveToSecond (this,SecondActivity.class);
+                                editor.apply ();
+                                moveToSecond ();
                             } else {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 // If sign in fails, display a message to the user.
@@ -161,9 +174,8 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful ()) {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 Toast.makeText (getBaseContext (), "Create user with Email : Success", Toast.LENGTH_SHORT).show ();
-                                // TODO: 17/09/2018 fix this too
-//                                moveToSecond ();
-                                editor.commit ();
+                                moveToSecond ();
+                                editor.apply ();
                             } else {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 Toast.makeText (getBaseContext (), "Unsuccessful wrong details", Toast.LENGTH_SHORT).show ();
@@ -179,8 +191,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRememberMe() {
-        rMe = preferences.getBoolean ("RememberMe", rememberMe.isChecked ());
-        editor.putBoolean ("RememberMe", rMe);
+        editor.putBoolean (REMEMBER_ME, rememberMe.isChecked ());
         editor.apply ();
     }
 

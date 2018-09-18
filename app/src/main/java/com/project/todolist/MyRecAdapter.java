@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
+public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolder> {
 
     //private List<Item> list;
 
@@ -19,12 +19,12 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
         notifyDataSetChanged ();
     }
 
-    public RecAdapter() {
+    public MyRecAdapter() {
         list = new ArrayList<> ();
     }
 
     @Override
-    public RecAdapter.RecViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyRecAdapter.RecViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout,parent,false);
         return new RecViewHolder(view);
     }
