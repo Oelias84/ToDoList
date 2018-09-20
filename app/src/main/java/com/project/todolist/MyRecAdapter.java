@@ -7,12 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolder> {
 
     //private List<Item> list;
 
     private ArrayList<Item> list;
+
+    public MyRecAdapter (ArrayList<Item> lists){
+        this.list = lists;
+    }
 
     public void add(Item item) {
         list.add (item);
