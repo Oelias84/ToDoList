@@ -9,7 +9,7 @@
     android:theme="@style/Base.ThemeOverlay.AppCompat.ActionBar">
 
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp">
@@ -18,30 +18,27 @@
             android:textColor="@color/ColorToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="To Do List"
-            android:textSize="23dp"
+            android:text="@string/to_do_list"
+            android:textSize="23sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button"
+            android:contentDescription="@string/add_button"
+            android:src="@drawable/ic_add_white_24dp"
+            android:background="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="8dp"
             android:onClick="addBtn"
-            android:text="Add"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="0dp"
             tools:ignore="MissingConstraints" />
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

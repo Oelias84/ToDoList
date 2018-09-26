@@ -89,7 +89,7 @@ public class SecondActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot g : dataSnapshot.getChildren ()) {
                     Item oldItem = g.getValue (Item.class);
-                    boolean result = false;
+                    boolean result;
                     if (oldItem != null){
                             result = adapter.add (oldItem);
                         Toast.makeText (SecondActivity.this, "Added was "+result, Toast.LENGTH_SHORT).show ();
@@ -142,7 +142,7 @@ public class SecondActivity extends AppCompatActivity {
 
 
     public void addBtn(final View btn) {
-        @SuppressLint("InflateParams") View v = getLayoutInflater ().inflate (R.layout.dailog_add_btn_dialog, null, false);
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.dailog_add_btn_dialog, null, false);
         final EditText titleEdt = v.findViewById (R.id.title_edit_txt),
                 descriptionEdt = v.findViewById (R.id.description_edit_txt);
 
