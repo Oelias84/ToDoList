@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,9 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+
 
 import static android.content.ContentValues.TAG;
 
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private String email, pass;
 
     //Connection with fireBase
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = null;
     private ProgressBar progressBar;
 
 
@@ -53,14 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_main);
-
-        mAuth = FirebaseAuth.getInstance ();
+        Toast.makeText (this,mAuth == null ? "mAuth-Null": mAuth.toString () ,Toast.LENGTH_LONG).show ();
 
     }
+
 
     public void moveToSecond() {
         Intent i = new Intent (this, SecondActivity.class);
         startActivity (i);
+        mAuth.signOut ();
     }
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
@@ -73,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         //initialising Alert view
         view = getLayoutInflater ().inflate (R.layout.dailog_login_signup, null, false);
-
         rememberMe = view.findViewById (R.id.CB_RememberMe);
         loginEmail = view.findViewById (R.id.editTxtEmail);
         loginPass = view.findViewById (R.id.editTxtPass);
@@ -134,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login() {
+        mAuth = FirebaseAuth.getInstance ();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.signInWithEmailAndPassword (email, pass)
@@ -144,10 +151,10 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful ()) {
                                 setRememberMe ();
                                 Log.d (TAG, "signInWithEmail:success");
-                                Toast.makeText (getBaseContext (), "Login Successful", Toast.LENGTH_SHORT).show ();
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 editor.apply ();
-                                moveToSecond ();
+                                //Move to second
+                                startActivity (new Intent (getBaseContext (),SecondActivity.class));
                             } else {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 // If sign in fails, display a message to the user.
@@ -164,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+        mAuth = FirebaseAuth.getInstance ();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.createUserWithEmailAndPassword (email, pass)
@@ -174,15 +182,16 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful ()) {
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 Toast.makeText (getBaseContext (), "Create user with Email : Success", Toast.LENGTH_SHORT).show ();
-                                moveToSecond ();
                                 editor.apply ();
                             } else {
+                                mAuth = null;
                                 getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 Toast.makeText (getBaseContext (), "Unsuccessful wrong details", Toast.LENGTH_SHORT).show ();
                             }
                         }
                     });
         } else {
+            mAuth = null;
             Toast.makeText (this, "Email/Password is Empty", Toast.LENGTH_SHORT).show ();
             getWindow ().clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
@@ -197,8 +206,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        editor.apply ();
+        if (editor != null)
+            editor.apply ();
+        if (mAuth != null)
+            mAuth.signOut ();
         super.onDestroy ();
     }
+
 }
+
 

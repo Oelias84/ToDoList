@@ -5,11 +5,12 @@ public class Item {
     private String ttl;
     private String desc;
 
-
-
     //state of item
     private boolean expanded;
 
+    public Item(){
+
+    }
     public Item(String ttl, String desc) {
         this.ttl = ttl;
         this.desc = desc;

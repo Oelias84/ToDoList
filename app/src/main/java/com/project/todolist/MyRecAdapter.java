@@ -1,31 +1,52 @@
 package com.project.todolist;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolder> {
 
-    //private List<Item> list;
 
-    private ArrayList<Item> list;
 
-    public MyRecAdapter (ArrayList<Item> lists){
+    private List<Item> list ;
+
+
+    public MyRecAdapter (List<Item> lists){
+        lists = new ArrayList<> ();
         this.list = lists;
+
     }
 
-    public void add(Item item) {
-        list.add (item);
-        notifyDataSetChanged ();
+
+    boolean add(Item item) {
+        if (!list.contains (item)) {
+            list.add (item);
+            notifyItemInserted (list.size ());
+            return true;
+        }
+        return false;
     }
 
-    public MyRecAdapter() {
-        list = new ArrayList<> ();
+    void moveToEnd(int position){
+        if (position != list.size ()){
+            list.add (list.size () , list.get (position));
+            list.remove (position);
+            notifyItemChanged (position);
+            notifyItemMoved (position, list.size () + 1);
+        }
+    }
+
+    void remove(int position){
+        list.remove (position);
+        notifyItemRemoved (position);
     }
 
     @Override
@@ -36,18 +57,26 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
 
     @Override
     public void onBindViewHolder(RecViewHolder holder, final int position) {
+
         final Item item = list.get(position);
 
-        holder.bind(item);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean expanded = item.isExpanded();
-                item.setExpanded(!expanded);
-                notifyItemChanged(position);
-            }
-        });
+        if (item != null) {
+            holder.bind (item);
+            holder.itemView.setOnClickListener (new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    if (item.getDesc () != null) {
+                        if (!item.getDesc ().isEmpty ()) {
+                            boolean expanded = item.isExpanded ();
+                            item.setExpanded (!expanded);
+                            notifyItemChanged (position);
+                        }
+                    }
+                }
+            });
+        }
     }
+
 
     @Override
     public int getItemCount() {
@@ -61,6 +90,7 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
         private View subItem;
 
         public RecViewHolder(View itemView) {
+
             super(itemView);
 
             ttl = itemView.findViewById(R.id.item_title);
@@ -69,12 +99,11 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
         }
 
         private void bind(Item item) {
-            boolean expanded = item.isExpanded();
-
-            subItem.setVisibility(expanded ? View.VISIBLE : View.GONE);
-
-            ttl.setText(item.getTtl());
-            desc.setText("Description: " + item.getDesc());
+            if (item != null) {
+                subItem.setVisibility (item.isExpanded () ? View.VISIBLE : View.GONE);
+                ttl.setText (item.getTtl ());
+                desc.setText (item.getDesc ());
+            }
         }
     }
 

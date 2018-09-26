@@ -17,7 +17,7 @@
         android:background="#D3D3D3"/>
 
     <TextView
-        android:text="some text"
+        android:text="@string/start_writing_your_tododa"
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,6 @@
 
         <TextView
             android:id="@+id/sub_item_desc"
-            android:text="Description: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
