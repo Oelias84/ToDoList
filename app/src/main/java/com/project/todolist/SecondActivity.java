@@ -36,8 +36,7 @@ import java.util.List;
 public class SecondActivity extends AppCompatActivity {
 
 
-    //change here to the new recView
-    private List<Item> itemList = new ArrayList<> ();
+    //Change here to the new recView
     private boolean create = true;
 
     // RecyclerViewAdapter ;
@@ -59,8 +58,9 @@ public class SecondActivity extends AppCompatActivity {
             gettingMessagesFromFireBase (myRef);
         }
 
+
         //Building doToList
-        adapter = new MyRecAdapter (itemList);
+        adapter = new MyRecAdapter (new ArrayList<Item> ());
 
         //Toolbar clear
         @SuppressLint("ResourceType")
@@ -78,6 +78,7 @@ public class SecondActivity extends AppCompatActivity {
 
     }
 
+    //getting oldTodo's from fireBase
     private void gettingMessagesFromFireBase(final DatabaseReference myRef) {
 
         myRef.child (user.getUid ()).addValueEventListener (new ValueEventListener () {
@@ -88,7 +89,7 @@ public class SecondActivity extends AppCompatActivity {
                         Item oldItem = g.getValue (Item.class);
                         boolean result = false;
                             if (oldItem != null)
-                                if (!adapter.list.contains (oldItem) && !itemList.contains (oldItem))
+                                if (!adapter.list.contains (oldItem))
                                     adapter.add (oldItem);
 
                     }
@@ -134,6 +135,7 @@ public class SecondActivity extends AppCompatActivity {
         return simpleCallback;
     }
 
+    //add btn to RecyclerView
     public void addBtn(final View btn) {
         @SuppressLint("InflateParams") View v = getLayoutInflater ().inflate (R.layout.dailog_add_btn_dialog, null, false);
         final EditText titleEdt = v.findViewById (R.id.title_edit_txt),
@@ -164,20 +166,6 @@ public class SecondActivity extends AppCompatActivity {
                 .show ();
     }
 
-    public void setAlarm(Date dateOfAlarm){
-        long month = dateOfAlarm.getTime ();
-        Toast.makeText (this,String.valueOf (month),Toast.LENGTH_LONG).show ();
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService (ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance ();
-        calendar.add (Calendar.SECOND,5);
-
-        Intent intent = new Intent ("toDoda.action.DISPLAY_NOTIFICATION");
-        PendingIntent broadcast = PendingIntent.getBroadcast (this,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setExact (AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis (),broadcast);
-
-
-    }
 
 
 }
