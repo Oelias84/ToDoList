@@ -12,6 +12,8 @@
     <string name="Done">Done:</string>
     <string name="Cancel">Cancel</string>
     <string name="start_writing_your_tododa">Start Writing your ToDoDa !</string>
+    <string name="add_button">add button</string>
+    <string name="to_do_list">To Do List</string>
 
 
 </resources>
