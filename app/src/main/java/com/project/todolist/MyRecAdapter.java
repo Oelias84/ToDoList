@@ -19,8 +19,6 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
 
 
     public List<Item> list ;
-    private Item item;
-    boolean expanded;
 
 
     public MyRecAdapter (List<Item> lists){
@@ -64,10 +62,10 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
     }
 
     @Override
-    public void onBindViewHolder(final RecViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecViewHolder holder, int position) {
 
 
-        item = list.get(holder.getAdapterPosition ());
+        final Item item = list.get(holder.getAdapterPosition ());
         if (item != null) {
             holder.bind (item);
             holder.itemView.setOnClickListener (new View.OnClickListener () {
@@ -75,7 +73,7 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
                 public void onClick(View v) {
                     if (item.getDesc () != null) {
                         if (!item.getDesc ().isEmpty ()) {
-                            expanded = item.isExpanded ();
+                            boolean expanded = item.isExpanded ();
                             item.setExpanded (!expanded);
                             notifyItemChanged (holder.getAdapterPosition ());
                         }

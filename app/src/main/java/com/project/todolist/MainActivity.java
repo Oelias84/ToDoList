@@ -54,32 +54,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance ();
-
-
-
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        int result = data.getIntExtra("action", 0);
-        if (result == 100)
-            Toast.makeText (this, String.valueOf(signOut()) ,Toast.LENGTH_LONG).show ();
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public boolean signOut(){
-        if (mAuth != null){
-            mAuth.signOut();
-            return true;
-        }
-        return false;
-
     }
 
 
@@ -154,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login() {
-
+        mAuth = FirebaseAuth.getInstance();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.signInWithEmailAndPassword (email, pass)
@@ -185,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+        mAuth = FirebaseAuth.getInstance();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.createUserWithEmailAndPassword (email, pass)

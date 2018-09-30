@@ -1,6 +1,5 @@
 package com.project.todolist;
 
-import java.util.Date;
 
 public class Item {
 
@@ -12,11 +11,6 @@ public class Item {
 
     public Item(){
 
-    }
-
-    public Item(String ttl, String desc, Date doTime) {
-        this.ttl = ttl;
-        this.desc = desc;
     }
 
     public Item(String ttl, String desc) {
