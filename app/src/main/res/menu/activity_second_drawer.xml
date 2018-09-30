@@ -23,10 +23,10 @@
         </menu>
     </item>
 
-    <item>
+    <item android:title="signOut">
         <item
             android:id="@+id/nav_exit"
             android:icon="@drawable/ic_exit"
-            android:title="Exit" />
+            android:title="signOut" />
     </item>
 </menu>

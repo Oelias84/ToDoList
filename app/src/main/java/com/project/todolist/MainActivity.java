@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import static android.content.ContentValues.TAG;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
 
     //Remember me
@@ -56,8 +56,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance ();
+        int isSignOut = getIntent ().getIntExtra ("signOut", 0);
+        if (isSignOut == 10){
+            Toast.makeText (this, signOut () ? "signOut Successfully " : "signOut ERROR ",Toast.LENGTH_LONG ).show ();
+        }
     }
 
+    public boolean signOut(){
+        if (mAuth != null) {
+            mAuth.signOut ();
+            return true;
+        }
+        return false;
+    }
 
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
@@ -130,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login() {
-        mAuth = FirebaseAuth.getInstance();
+       if (mAuth == null)
+           mAuth = FirebaseAuth.getInstance ();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.signInWithEmailAndPassword (email, pass)
@@ -161,7 +175,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        mAuth = FirebaseAuth.getInstance();
+        if (mAuth == null)
+            mAuth = FirebaseAuth.getInstance ();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.createUserWithEmailAndPassword (email, pass)
@@ -202,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
             mAuth.signOut ();
         super.onDestroy ();
     }
+
 
 }
 

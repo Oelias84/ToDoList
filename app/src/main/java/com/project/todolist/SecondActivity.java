@@ -35,7 +35,6 @@ import java.util.ArrayList;
 public class SecondActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ImageButton hamburgBtn;
     //Change here to the new recView
     private boolean create = true;
 
@@ -46,7 +45,7 @@ public class SecondActivity extends AppCompatActivity
     private FirebaseUser user = null;
     private DatabaseReference myRef = null;
 
-    public DrawerLayout drawer;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,21 +62,19 @@ public class SecondActivity extends AppCompatActivity
         //toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         //Drawer for hamburgerView
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         toggle.setDrawerIndicatorEnabled(false);
-        hamburgBtn = findViewById(R.id.hamburg);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         //Building doToList
         adapter = new MyRecAdapter (new ArrayList<Item>());
-
 
         //Setting RecyclerView
         RecyclerView rcv = findViewById (R.id.recycler_view);
@@ -108,14 +105,16 @@ public class SecondActivity extends AppCompatActivity
         if (id == R.id.nav_exit) {
             if (user != null) {
                 user = null;
+                myRef = null;
                 Intent signOut = new Intent(this, MainActivity.class);
-                signOut.putExtra("signOut", 100);
+                signOut.putExtra("signOut", 10);
                 startActivity(signOut);
                 finish();
+            }else {
+                finish ();
             }
-
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -167,11 +166,11 @@ public class SecondActivity extends AppCompatActivity
                         myRef.child (user.getUid ()).child(adapter.list.get (position).getTtl ()).removeValue ();
                     }
                     adapter.remove (position);
-                    Toast.makeText (getBaseContext (), "Task - " +position+ " was removed ", Toast.LENGTH_SHORT).show ();
+                    Toast.makeText (getBaseContext (), "- Task - " +(position +1)+ " was removed ", Toast.LENGTH_SHORT).show ();
 
                 } if (direction == ItemTouchHelper.LEFT){
                     adapter.moveToEnd (position);
-                    Toast.makeText (getBaseContext (), "- Move to end - "+ position,Toast.LENGTH_SHORT).show ();
+                    Toast.makeText (getBaseContext (), "- Move to end - "+(1+position),Toast.LENGTH_SHORT).show ();
                 }
             }
         };
@@ -212,4 +211,7 @@ public class SecondActivity extends AppCompatActivity
     public void hamburgBtn(View view) {
         drawer.openDrawer(GravityCompat.START);
     }
+
 }
+
+
