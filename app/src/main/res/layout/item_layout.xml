@@ -2,28 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fafafa"
+    android:background="@drawable/mybutton"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingEnd="16dp"
-    android:paddingLeft="16dp"
-    android:paddingStart="16dp">
-    
-    <View
-        android:id="@+id/item_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="16dp"
-        android:background="#D3D3D3"/>
+    android:elevation="2dp"
+    android:layout_margin="7dp"
+    android:padding="24dp">
+
 
     <TextView
         android:text="@string/start_writing_your_tododa"
         android:id="@+id/item_title"
+        android:textStyle=""
+        android:elegantTextHeight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#e44048"
         android:textSize="22sp"
-         />
+        />
 
     <LinearLayout
         android:id="@+id/sub_item"
@@ -32,12 +29,39 @@
         android:layout_marginTop="16dp"
         android:orientation="vertical">
 
+
+        <View
+            android:id="@+id/sub_item_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="#D3D3D3"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/description_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:text="@string/Description"
+            android:paddingEnd="8dp"/>
+
+
         <TextView
             android:id="@+id/sub_item_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:orientation="vertical" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

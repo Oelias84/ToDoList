@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -59,16 +57,32 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_main);
-        Toast.makeText (this,mAuth == null ? "mAuth-Null": mAuth.toString () ,Toast.LENGTH_LONG).show ();
+        mAuth = FirebaseAuth.getInstance ();
+
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        int result = data.getIntExtra("action", 0);
+        if (result == 100)
+            Toast.makeText (this, String.valueOf(signOut()) ,Toast.LENGTH_LONG).show ();
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public boolean signOut(){
+        if (mAuth != null){
+            mAuth.signOut();
+            return true;
+        }
+        return false;
 
     }
 
 
-    public void moveToSecond() {
-        Intent i = new Intent (this, SecondActivity.class);
-        startActivity (i);
-        mAuth.signOut ();
-    }
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
         startActivity (i);
@@ -140,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login() {
-        mAuth = FirebaseAuth.getInstance ();
+
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.signInWithEmailAndPassword (email, pass)
@@ -171,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        mAuth = FirebaseAuth.getInstance ();
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.createUserWithEmailAndPassword (email, pass)

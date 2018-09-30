@@ -5,37 +5,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/app_background"
+    android:background="@mipmap/app_background_final"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:paddingStart="40dp"
+        android:src="@mipmap/logo_192" />
 
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:padding="10dp"
-        android:textColor="#ffffff"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/button_border_white"
+        android:layout_marginTop="400dp"
+        android:background="@drawable/mybutton"
+        android:elevation="16dp"
         android:onClick="login_RegisterAlert"
+        android:padding="10dp"
         android:text="@string/login_or_register"
-        />
+        android:textColor="#e44048"
+        android:textStyle="bold" />
 
 
     <Button
         android:id="@+id/btnOfir"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
-        android:padding="10dp"
-        android:textColor="#ffffff"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/button_border_white"
-        android:onClick="moveToSecond"
-        android:text="@string/move_to_list"
         android:layout_gravity="center"
-        />
+        android:layout_marginTop="460dp"
+        android:background="@drawable/mybutton"
+        android:elevation="16dp"
+        android:onClick="moveToSecond"
+        android:padding="10dp"
+        android:text="@string/move_to_list"
+        android:textColor="#e44048"
+        android:textStyle="bold" />
 
 </RelativeLayout>

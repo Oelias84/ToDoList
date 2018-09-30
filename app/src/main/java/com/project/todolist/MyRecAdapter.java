@@ -19,6 +19,8 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
 
 
     public List<Item> list ;
+    private Item item;
+    boolean expanded;
 
 
     public MyRecAdapter (List<Item> lists){
@@ -46,6 +48,7 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
     void remove(int position){
         list.remove (position);
         notifyItemRemoved (position);
+
     }
 
     void editItem(int position, String ttl, String desc){
@@ -61,9 +64,10 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
     }
 
     @Override
-    public void onBindViewHolder(final RecViewHolder holder,int position) {
+    public void onBindViewHolder(final RecViewHolder holder, final int position) {
 
-        final Item item = list.get(holder.getAdapterPosition ());
+
+        item = list.get(holder.getAdapterPosition ());
         if (item != null) {
             holder.bind (item);
             holder.itemView.setOnClickListener (new View.OnClickListener () {
@@ -71,7 +75,7 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
                 public void onClick(View v) {
                     if (item.getDesc () != null) {
                         if (!item.getDesc ().isEmpty ()) {
-                            boolean expanded = item.isExpanded ();
+                            expanded = item.isExpanded ();
                             item.setExpanded (!expanded);
                             notifyItemChanged (holder.getAdapterPosition ());
                         }
