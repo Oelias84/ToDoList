@@ -5,6 +5,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,12 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
     void remove(int position){
         list.remove (position);
         notifyItemRemoved (position);
+    }
+
+    void editItem(int position, String ttl, String desc){
+        list.get (position).setTtl (ttl);
+        list.get (position).setDesc (desc);
+        notifyItemChanged (position);
     }
 
     @Override
