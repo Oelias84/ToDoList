@@ -16,43 +16,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolder> {
 
-
-
+    //List that contains ToDos
     public List<Item> list ;
 
-
+    //constructor
     public MyRecAdapter (List<Item> lists){
         this.list = lists;
-    }
-
-    boolean add(Item item) {
-        if (!list.contains (item)) {
-            list.add (item);
-            notifyItemInserted (list.size ());
-            return true;
-        }
-        return false;
-    }
-
-    void moveToEnd(int position){
-        if (position != list.size ()){
-            list.add (list.size () , list.get (position));
-            list.remove (position);
-            notifyItemChanged (position);
-            notifyItemMoved (position, list.size () + 1);
-        }
-    }
-
-    void remove(int position){
-        list.remove (position);
-        notifyItemRemoved (position);
-
-    }
-
-    void editItem(int position, String ttl, String desc){
-        list.get (position).setTtl (ttl);
-        list.get (position).setDesc (desc);
-        notifyItemChanged (position);
     }
 
     @Override
@@ -64,7 +33,7 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
     @Override
     public void onBindViewHolder(final RecViewHolder holder, int position) {
 
-
+        //making View on Item Clickable for expanded ability's
         final Item item = list.get(holder.getAdapterPosition ());
         if (item != null) {
             holder.bind (item);
@@ -82,7 +51,6 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
             });
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -111,6 +79,36 @@ public class MyRecAdapter extends RecyclerView.Adapter<MyRecAdapter.RecViewHolde
                 desc.setText (item.getDesc ());
             }
         }
+    }
+
+    public boolean add(Item item) {
+        if (!list.contains (item)) {
+            list.add (item);
+            notifyItemInserted (list.size ());
+            return true;
+        }
+        return false;
+    }
+
+    public void moveToEnd(int position){
+        if (position != list.size ()){
+            list.add (list.size () , list.get (position));
+            list.remove (position);
+            notifyItemChanged (position);
+            notifyItemMoved (position, list.size () + 1);
+        }
+    }
+
+    public void remove(int position){
+        list.remove (position);
+        notifyItemRemoved (position);
+
+    }
+
+    public void editItem(int position, String ttl, String desc){
+        list.get (position).setTtl (ttl);
+        list.get (position).setDesc (desc);
+        notifyItemChanged (position);
     }
 
 

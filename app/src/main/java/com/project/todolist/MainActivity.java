@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity{
     private static final String REMEMBER_ME ="RememberMe";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASS = "pass";
-
     private CheckBox rememberMe;
 
     //Certification for login
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity{
             Toast.makeText (this, signOut () ? "signOut Successfully " : "signOut ERROR ",Toast.LENGTH_LONG ).show ();
         }
     }
-
+    //SignOut
     public boolean signOut(){
         if (mAuth != null) {
             mAuth.signOut ();
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity{
         return false;
     }
 
+    //for Offline use
     public void moveToSecond(View view) {
         Intent i = new Intent (this, SecondActivity.class);
         startActivity (i);
@@ -142,9 +142,11 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+
     private void login() {
        if (mAuth == null)
            mAuth = FirebaseAuth.getInstance ();
+        //checking  certification
         if (!email.isEmpty () && !pass.isEmpty ()) {
             progressBar.setVisibility (View.VISIBLE);
             mAuth.signInWithEmailAndPassword (email, pass)

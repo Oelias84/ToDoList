@@ -44,7 +44,7 @@ public class SecondActivity extends AppCompatActivity
     //User + Database
     private FirebaseUser user = null;
     private DatabaseReference myRef = null;
-
+    //For hamburger menu
     private DrawerLayout drawer;
 
     @Override
@@ -59,7 +59,7 @@ public class SecondActivity extends AppCompatActivity
             gettingMessagesFromFireBase (myRef);
         }
 
-        //toolbar
+        //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -86,6 +86,7 @@ public class SecondActivity extends AppCompatActivity
         itemTouchHelper.attachToRecyclerView (rcv);
     }
 
+    //When hamburger open respond differently
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -96,10 +97,11 @@ public class SecondActivity extends AppCompatActivity
         }
     }
 
+
+    //Handle navigation view item clicks here.
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
 
         int id = item.getItemId();
         if (id == R.id.nav_exit) {
@@ -118,7 +120,6 @@ public class SecondActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     //getting oldTodo's from fireBase
     private void gettingMessagesFromFireBase(final DatabaseReference myRef) {
@@ -160,14 +161,14 @@ public class SecondActivity extends AppCompatActivity
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition ();
-                // when swiping right (Done) -
+                // when swiping right (Delete) -
                 if (direction == ItemTouchHelper.RIGHT) {
                     if (myRef != null) {
                         myRef.child (user.getUid ()).child(adapter.list.get (position).getTtl ()).removeValue ();
                     }
                     adapter.remove (position);
                     Toast.makeText (getBaseContext (), "- Task - " +(position +1)+ " was removed ", Toast.LENGTH_SHORT).show ();
-
+                //When Swiping left(Move to end)
                 } if (direction == ItemTouchHelper.LEFT){
                     adapter.moveToEnd (position);
                     Toast.makeText (getBaseContext (), "- Move to end - "+(1+position),Toast.LENGTH_SHORT).show ();
